@@ -3,6 +3,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour {
+    private Movement _movementComponent;
+    private AudioSource _audioSource;
+
+    [SerializeField] private float endOfLevelDelay = 0;
+    
+    private void Start() {
+        _movementComponent = GetComponent<Movement>();
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnCollisionEnter(Collision other) {
         switch (other.gameObject.tag) {
             case "Friendly":
@@ -10,16 +20,25 @@ public class CollisionHandler : MonoBehaviour {
                 break;
             case "Finish":
                 Debug.Log("Collision detected: Finish");
-                LoadNextLevel();
-                break;
-            case "Fuel":
-                Debug.Log("Collision detected: Fuel");
+                FinishLevel();
                 break;
             default:
                 Debug.Log("Collision detected: Obstacle");
-                ReloadLevel();
+                DestroyPlayer();
                 break;
         }
+    }
+
+    private void DestroyPlayer() {
+        // TODO add SFX and particle FX
+        DisablePlayerController();
+        Invoke(nameof(ReloadLevel), endOfLevelDelay);
+    }
+    
+    private void FinishLevel() {
+        // TODO add SFX and particle FX
+        DisablePlayerController();
+        Invoke(nameof(LoadNextLevel), endOfLevelDelay);
     }
 
     private void LoadNextLevel() {
@@ -35,4 +54,10 @@ public class CollisionHandler : MonoBehaviour {
         var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
+
+    private void DisablePlayerController() {
+        _audioSource.enabled = false;
+        _movementComponent.enabled = false;
+    }
+
 }
