@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour {
     private void OnCollisionEnter(Collision other) {
@@ -15,7 +16,13 @@ public class CollisionHandler : MonoBehaviour {
                 break;
             default:
                 Debug.Log("Collision detected: Obstacle");
+                ReloadLevel();
                 break;
         }
+    }
+
+    private void ReloadLevel() {
+        var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }
