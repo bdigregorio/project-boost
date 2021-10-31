@@ -10,6 +10,7 @@ public class CollisionHandler : MonoBehaviour {
                 break;
             case "Finish":
                 Debug.Log("Collision detected: Finish");
+                LoadNextLevel();
                 break;
             case "Fuel":
                 Debug.Log("Collision detected: Fuel");
@@ -19,6 +20,15 @@ public class CollisionHandler : MonoBehaviour {
                 ReloadLevel();
                 break;
         }
+    }
+
+    private void LoadNextLevel() {
+        var nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextLevelIndex >= SceneManager.sceneCountInBuildSettings) {
+            nextLevelIndex = 0;
+        }
+
+        SceneManager.LoadScene(nextLevelIndex);
     }
 
     private void ReloadLevel() {
