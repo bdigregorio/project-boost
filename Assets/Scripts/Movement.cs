@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class Movement : MonoBehaviour {
-    private Rigidbody _rigidbody;
-    private AudioSource _audioSource;
+    [SerializeField] float mainThrust = 0;
+    [SerializeField] float rotationThrust = 0;
+    [SerializeField] AudioClip rocketThrustSfx;
 
-    [SerializeField] private float mainThrust = 0;
-    [SerializeField] private float rotationThrust = 0;
+    private Rigidbody _rigidbody;
+    public AudioSource _audioSource;
+    
 
     void Start() {
         _rigidbody = GetComponent<Rigidbody>();
@@ -25,7 +23,7 @@ public class Movement : MonoBehaviour {
         if (Input.GetKey(KeyCode.W)) {
             _rigidbody.AddRelativeForce(mainThrust * Time.deltaTime * Vector3.up);
             if (!_audioSource.isPlaying) {
-                _audioSource.Play();
+                _audioSource.PlayOneShot(rocketThrustSfx);
             }
         } else {
             _audioSource.Stop();

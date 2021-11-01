@@ -1,42 +1,47 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour {
-    private Movement _movementComponent;
-    private AudioSource _audioSource;
+    [SerializeField] float endOfLevelDelay = 0;
+    [SerializeField] AudioClip collisionSFX;
+    [SerializeField] AudioClip missionSuccessSFX;
 
-    [SerializeField] private float endOfLevelDelay = 0;
-    
+    Movement _movementComponent;
+    AudioSource _audioSource;
+
+    bool isTransitioning = false;
+
     private void Start() {
         _movementComponent = GetComponent<Movement>();
         _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnCollisionEnter(Collision other) {
+        if (isTransitioning) return;
+
         switch (other.gameObject.tag) {
             case "Friendly":
                 Debug.Log("Collision detected: Friendly");
                 break;
             case "Finish":
-                Debug.Log("Collision detected: Finish");
                 FinishLevel();
                 break;
             default:
-                Debug.Log("Collision detected: Obstacle");
                 DestroyPlayer();
                 break;
         }
     }
 
     private void DestroyPlayer() {
-        // TODO add SFX and particle FX
+        // TODO particle FX
+        TriggerExplosion();
         DisablePlayerController();
         Invoke(nameof(ReloadLevel), endOfLevelDelay);
     }
-    
+
     private void FinishLevel() {
-        // TODO add SFX and particle FX
+        // TODO add particle FX
+        TriggerSuccessSequence();
         DisablePlayerController();
         Invoke(nameof(LoadNextLevel), endOfLevelDelay);
     }
@@ -50,14 +55,24 @@ public class CollisionHandler : MonoBehaviour {
         SceneManager.LoadScene(nextLevelIndex);
     }
 
+    private void TriggerExplosion() {
+        isTransitioning = !isTransitioning;
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(collisionSFX);
+    }
+
+    private void TriggerSuccessSequence() {
+        isTransitioning = !isTransitioning;
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(missionSuccessSFX);
+    }
+
     private void ReloadLevel() {
         var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
 
     private void DisablePlayerController() {
-        _audioSource.enabled = false;
         _movementComponent.enabled = false;
     }
-
 }

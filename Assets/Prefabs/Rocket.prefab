@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainThrust: 1000
   rotationThrust: 100
+  rocketThrustSfx: {fileID: 8300000, guid: 32c7edb85963dcc44abd44239931d43c, type: 3}
 --- !u!82 &1420536727
 AudioSource:
   m_ObjectHideFlags: 0
@@ -238,3 +239,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endOfLevelDelay: 3
+  collisionSFX: {fileID: 8300000, guid: 1afc7b66eb10afc4bb86ed5629181703, type: 3}
+  missionSuccessSFX: {fileID: 8300000, guid: 0623c680ecff57f42906d49de82f924e, type: 3}
