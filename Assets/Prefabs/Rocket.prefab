@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2674673905335130602}
+  - component: {fileID: 6007005013745658263}
   m_Layer: 0
   m_Name: Boosters
   m_TagString: Untagged
@@ -34,6 +35,19 @@ Transform:
   m_Father: {fileID: 3109761888804465428}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6007005013745658263
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178331108750385136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.75, y: 0.45, z: 1.75}
+  m_Center: {x: 0, y: -1.5, z: 0}
 --- !u!1 &2637883036459689244
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +249,6 @@ GameObject:
   - component: {fileID: 4486479381804642856}
   - component: {fileID: 6661821807333569678}
   - component: {fileID: 7502058734996066482}
-  - component: {fileID: 4602734290748412933}
   m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
@@ -306,20 +319,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4602734290748412933
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3299090039909950902}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &3319432421710701315
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +330,6 @@ GameObject:
   - component: {fileID: 6841378269311482597}
   - component: {fileID: 5020282390600114353}
   - component: {fileID: 454877574478281347}
-  - component: {fileID: 7720118215910125728}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -402,20 +400,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7720118215910125728
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3319432421710701315}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &5977674727865234344
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +411,6 @@ GameObject:
   - component: {fileID: 8421900293723982125}
   - component: {fileID: 6383646799984463288}
   - component: {fileID: 4359238801413780052}
-  - component: {fileID: 1985050883013951558}
   m_Layer: 0
   m_Name: Cylinder (3)
   m_TagString: Untagged
@@ -498,20 +481,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1985050883013951558
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5977674727865234344}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &6542283194283885319
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +681,6 @@ GameObject:
   - component: {fileID: 8054655596792915675}
   - component: {fileID: 7077728360467559125}
   - component: {fileID: 1649412389118070061}
-  - component: {fileID: 2212249559483044505}
   m_Layer: 0
   m_Name: Cylinder (2)
   m_TagString: Untagged
@@ -783,17 +751,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2212249559483044505
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9192963785315555284}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
