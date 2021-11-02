@@ -23,6 +23,12 @@ public class Movement : MonoBehaviour {
         ProcessRotation();
     }
 
+    public void cancelParticleEffects() {
+        mainThrusterPFX.Stop();
+        leftThrusterPFX.Stop();
+        rightThrusterPFX.Stop();
+    }
+
     private void ProcessThrust() {
         if (Input.GetKey(KeyCode.W)) {
             EngageMainThruster();

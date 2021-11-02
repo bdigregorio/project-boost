@@ -60,6 +60,7 @@ public class CollisionHandler : MonoBehaviour {
         crashPFX.Play();
         _audioSource.Stop();
         _audioSource.PlayOneShot(collisionSFX);
+        _movementComponent.cancelParticleEffects();
         
     }
 
@@ -68,6 +69,7 @@ public class CollisionHandler : MonoBehaviour {
         successPFX.Play();
         _audioSource.Stop();
         _audioSource.PlayOneShot(missionSuccessSFX);
+        _movementComponent.cancelParticleEffects();
     }
 
     private void ReloadLevel() {
