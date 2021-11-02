@@ -5,11 +5,13 @@ public class CollisionHandler : MonoBehaviour {
     [SerializeField] float endOfLevelDelay = 0;
     [SerializeField] AudioClip collisionSFX;
     [SerializeField] AudioClip missionSuccessSFX;
+    [SerializeField] ParticleSystem successPFX;
+    [SerializeField] ParticleSystem crashPFX;
 
     Movement _movementComponent;
     AudioSource _audioSource;
 
-    bool isTransitioning = false;
+    bool sceneIsTransitioning = false;
 
     private void Start() {
         _movementComponent = GetComponent<Movement>();
@@ -17,7 +19,7 @@ public class CollisionHandler : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision other) {
-        if (isTransitioning) return;
+        if (sceneIsTransitioning) return;
 
         switch (other.gameObject.tag) {
             case "Friendly":
@@ -33,14 +35,12 @@ public class CollisionHandler : MonoBehaviour {
     }
 
     private void DestroyPlayer() {
-        // TODO particle FX
-        TriggerExplosion();
+        TriggerCrashSequence();
         DisablePlayerController();
         Invoke(nameof(ReloadLevel), endOfLevelDelay);
     }
 
     private void FinishLevel() {
-        // TODO add particle FX
         TriggerSuccessSequence();
         DisablePlayerController();
         Invoke(nameof(LoadNextLevel), endOfLevelDelay);
@@ -55,14 +55,17 @@ public class CollisionHandler : MonoBehaviour {
         SceneManager.LoadScene(nextLevelIndex);
     }
 
-    private void TriggerExplosion() {
-        isTransitioning = !isTransitioning;
+    private void TriggerCrashSequence() {
+        sceneIsTransitioning = !sceneIsTransitioning;
+        crashPFX.Play();
         _audioSource.Stop();
         _audioSource.PlayOneShot(collisionSFX);
+        
     }
 
     private void TriggerSuccessSequence() {
-        isTransitioning = !isTransitioning;
+        sceneIsTransitioning = !sceneIsTransitioning;
+        successPFX.Play();
         _audioSource.Stop();
         _audioSource.PlayOneShot(missionSuccessSFX);
     }
