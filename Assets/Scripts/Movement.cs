@@ -24,34 +24,54 @@ public class Movement : MonoBehaviour {
 
     private void ProcessThrust() {
         if (Input.GetKey(KeyCode.W)) {
-            _rigidbody.AddRelativeForce(mainThrust * Time.deltaTime * Vector3.up);
-            if (!_audioSource.isPlaying) {
-                _audioSource.PlayOneShot(rocketThrustSfx);
-                if (!mainThrusterPFX.isPlaying) {
-                    mainThrusterPFX.Play();
-                }
-            }
+            EngageMainThruster();
         } else {
-            _audioSource.Stop();
-            mainThrusterPFX.Stop();
+            DisengageMainThruster();
         }
     }
 
     private void ProcessRotation() {
         if (Input.GetKey(KeyCode.A)) {
-            ApplyRotation(rotationThrust);
-            if (!rightThrusterPFX.isPlaying) {
-                rightThrusterPFX.Play();
-            }
+            RotateLeft();
         } else if (Input.GetKey(KeyCode.D)) {
-            ApplyRotation(-rotationThrust);
-            if (!leftThrusterPFX.isPlaying) {
-                leftThrusterPFX.Play();
-            }
+            RotateRight();
         } else {
-            leftThrusterPFX.Stop();
-            rightThrusterPFX.Stop();
+            StopRotating();
         }
+    }
+
+    private void DisengageMainThruster() {
+        _audioSource.Stop();
+        mainThrusterPFX.Stop();
+    }
+
+    private void EngageMainThruster() {
+        _rigidbody.AddRelativeForce(mainThrust * Time.deltaTime * Vector3.up);
+        if (!_audioSource.isPlaying) {
+            _audioSource.PlayOneShot(rocketThrustSfx);
+            if (!mainThrusterPFX.isPlaying) {
+                mainThrusterPFX.Play();
+            }
+        }
+    }
+
+    private void RotateRight() {
+        ApplyRotation(-rotationThrust);
+        if (!leftThrusterPFX.isPlaying) {
+            leftThrusterPFX.Play();
+        }
+    }
+
+    private void RotateLeft() {
+        ApplyRotation(rotationThrust);
+        if (!rightThrusterPFX.isPlaying) {
+            rightThrusterPFX.Play();
+        }
+    }
+
+    private void StopRotating() {
+        leftThrusterPFX.Stop();
+        rightThrusterPFX.Stop();
     }
 
     private void ApplyRotation(float rotation) {
