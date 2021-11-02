@@ -58,18 +58,16 @@ public class CollisionHandler : MonoBehaviour {
     private void TriggerCrashSequence() {
         sceneIsTransitioning = !sceneIsTransitioning;
         crashPFX.Play();
-        _audioSource.Stop();
+        _movementComponent.cancelMovementEffects();
         _audioSource.PlayOneShot(collisionSFX);
-        _movementComponent.cancelParticleEffects();
         
     }
 
     private void TriggerSuccessSequence() {
         sceneIsTransitioning = !sceneIsTransitioning;
         successPFX.Play();
-        _audioSource.Stop();
+        _movementComponent.cancelMovementEffects();
         _audioSource.PlayOneShot(missionSuccessSFX);
-        _movementComponent.cancelParticleEffects();
     }
 
     private void ReloadLevel() {

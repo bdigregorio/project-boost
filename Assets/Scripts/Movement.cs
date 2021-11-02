@@ -23,7 +23,9 @@ public class Movement : MonoBehaviour {
         ProcessRotation();
     }
 
-    public void cancelParticleEffects() {
+    public void cancelMovementEffects() {
+        thrusterAudioSource.Stop();
+        rotationAudioSource.Stop();
         mainThrusterPFX.Stop();
         leftThrusterPFX.Stop();
         rightThrusterPFX.Stop();
