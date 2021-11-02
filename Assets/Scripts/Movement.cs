@@ -1,20 +1,21 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour {
     [SerializeField] float mainThrust = 0;
     [SerializeField] float rotationThrust = 0;
-    [SerializeField] AudioClip rocketThrustSfx;
+    [SerializeField] AudioClip rocketThrustSFX;
+    [SerializeField] AudioClip thrusterHissSFX;
     [SerializeField] ParticleSystem mainThrusterPFX;
     [SerializeField] ParticleSystem leftThrusterPFX;
     [SerializeField] ParticleSystem rightThrusterPFX;
+    [SerializeField] AudioSource thrusterAudioSource;
+    [SerializeField] AudioSource rotationAudioSource;
 
     private Rigidbody _rigidbody;
-    private AudioSource _audioSource;
-
 
     void Start() {
         _rigidbody = GetComponent<Rigidbody>();
-        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update() {
@@ -41,22 +42,25 @@ public class Movement : MonoBehaviour {
     }
 
     private void DisengageMainThruster() {
-        _audioSource.Stop();
+        thrusterAudioSource.Stop();
         mainThrusterPFX.Stop();
     }
 
     private void EngageMainThruster() {
         _rigidbody.AddRelativeForce(mainThrust * Time.deltaTime * Vector3.up);
-        if (!_audioSource.isPlaying) {
-            _audioSource.PlayOneShot(rocketThrustSfx);
-            if (!mainThrusterPFX.isPlaying) {
-                mainThrusterPFX.Play();
-            }
+        if (!thrusterAudioSource.isPlaying){
+            thrusterAudioSource.PlayOneShot(rocketThrustSFX);
+        }
+        if (!mainThrusterPFX.isPlaying) {
+            mainThrusterPFX.Play();
         }
     }
 
     private void RotateRight() {
         ApplyRotation(-rotationThrust);
+        if (!rotationAudioSource.isPlaying) {
+            rotationAudioSource.PlayOneShot(thrusterHissSFX);
+        }
         if (!leftThrusterPFX.isPlaying) {
             leftThrusterPFX.Play();
         }
@@ -64,12 +68,16 @@ public class Movement : MonoBehaviour {
 
     private void RotateLeft() {
         ApplyRotation(rotationThrust);
+        if (!rotationAudioSource.isPlaying) {
+            rotationAudioSource.PlayOneShot(thrusterHissSFX);
+        }
         if (!rightThrusterPFX.isPlaying) {
             rightThrusterPFX.Play();
         }
     }
 
     private void StopRotating() {
+        rotationAudioSource.Stop();
         leftThrusterPFX.Stop();
         rightThrusterPFX.Stop();
     }
