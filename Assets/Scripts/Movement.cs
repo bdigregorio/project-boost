@@ -13,12 +13,15 @@ public class Movement : MonoBehaviour {
     [SerializeField] AudioSource rotationAudioSource;
 
     private Rigidbody _rigidbody;
+    private CollisionHandler _collisionHandler;
 
     void Start() {
         _rigidbody = GetComponent<Rigidbody>();
+        _collisionHandler = GetComponent<CollisionHandler>();
     }
 
     void Update() {
+        ProcessDevModes();
         ProcessThrust();
         ProcessRotation();
     }
@@ -29,6 +32,16 @@ public class Movement : MonoBehaviour {
         mainThrusterPFX.Stop();
         leftThrusterPFX.Stop();
         rightThrusterPFX.Stop();
+    }
+
+    private void ProcessDevModes() {
+        if (Input.GetKeyDown(KeyCode.L)) {
+            _collisionHandler.LoadNextLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            _collisionHandler.ToggleBypassCollisionMode();
+        }
     }
 
     private void ProcessThrust() {

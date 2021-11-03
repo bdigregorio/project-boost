@@ -12,6 +12,7 @@ public class CollisionHandler : MonoBehaviour {
     AudioSource _audioSource;
 
     bool sceneIsTransitioning = false;
+    bool shouldBypassCollisions = false;
 
     private void Start() {
         _movementComponent = GetComponent<Movement>();
@@ -29,30 +30,41 @@ public class CollisionHandler : MonoBehaviour {
                 FinishLevel();
                 break;
             default:
-                DestroyPlayer();
+                HandleCollision();
                 break;
         }
     }
 
-    private void DestroyPlayer() {
-        TriggerCrashSequence();
-        DisablePlayerController();
-        Invoke(nameof(ReloadLevel), endOfLevelDelay);
-    }
-
-    private void FinishLevel() {
-        TriggerSuccessSequence();
-        DisablePlayerController();
-        Invoke(nameof(LoadNextLevel), endOfLevelDelay);
-    }
-
-    private void LoadNextLevel() {
+    public void LoadNextLevel() {
         var nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextLevelIndex >= SceneManager.sceneCountInBuildSettings) {
             nextLevelIndex = 0;
         }
 
         SceneManager.LoadScene(nextLevelIndex);
+    }
+
+    public void ToggleBypassCollisionMode() {
+        shouldBypassCollisions = !shouldBypassCollisions;
+    }
+
+    private void ReloadLevel() {
+        var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
+    }
+
+    private void HandleCollision() {
+        if (!shouldBypassCollisions) {
+            TriggerCrashSequence();
+            DisablePlayerController();
+            Invoke(nameof(ReloadLevel), endOfLevelDelay);
+        }
+    }
+
+    private void FinishLevel() {
+        TriggerSuccessSequence();
+        DisablePlayerController();
+        Invoke(nameof(LoadNextLevel), endOfLevelDelay);
     }
 
     private void TriggerCrashSequence() {
@@ -68,11 +80,6 @@ public class CollisionHandler : MonoBehaviour {
         successPFX.Play();
         _movementComponent.cancelMovementEffects();
         _audioSource.PlayOneShot(missionSuccessSFX);
-    }
-
-    private void ReloadLevel() {
-        var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
     }
 
     private void DisablePlayerController() {
