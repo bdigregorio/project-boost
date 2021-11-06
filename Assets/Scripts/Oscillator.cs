@@ -17,6 +17,7 @@ public class Oscillator : MonoBehaviour {
     }
 
     void HandleOscillation() {
+        if (period <= Mathf.Epsilon) return;
         var cycles = Time.time  * tau / period; // input scaled properly for the period
         var sineOutput = Mathf.Sin(cycles); // from -1 to 1
         var movementFactor = (sineOutput + 1f) / 2f; // rescaled from 0 to 1 to calculate offset
